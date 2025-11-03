@@ -1,7 +1,37 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "clible2"
 version = "0.1.0"
 description = "Clible is a Bible in Command Line Interface"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "httpx>=0.28.1",
+    "loguru>=0.7.3",
+    "rich>=14.2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.4.2",
+    "pytest-mock>=3.15.1",
+]
+
+# Configures CLI-commands
+[project.scripts]
+clible = "clible.app.cli:main"
+
+# Tämä kertoo setuptools:lle missä koodi on
+[tool.setuptools]
+packages = ["clible", "clible.app", "clible.tests"]
+
+# Pytest-konfiguraatio
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["clible/tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
